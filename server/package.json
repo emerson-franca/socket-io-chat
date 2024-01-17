@@ -1,0 +1,30 @@
+{
+  "name": "chat-application-backend",
+  "version": "1.0.0",
+  "description": "Backend for the Chat Application",
+  "main": "index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chat",
+    "socket.io",
+    "express",
+    "node.js"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "http": "0.0.1-security",
+    "socket.io": "^4.0.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
