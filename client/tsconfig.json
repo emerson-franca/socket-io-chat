@@ -13,7 +13,7 @@
     "allowUnusedLabels": false,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": true,
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
@@ -24,5 +24,5 @@
     "jsx": "react-jsx",
     "baseUrl": "./src"
   },
-  "include": ["src"]
+  "include": ["src", "globals.d.ts"]
 }

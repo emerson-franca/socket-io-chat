@@ -1,84 +1,37 @@
-import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
-const socket = io("http://localhost:3001");
+import { useState } from "react";
+import { ReactComponent as SendIcon } from "./assets/send.svg";
+import { useChat } from "hooks/useChat";
+import useChatStore from "store/useChats";
 
 export function Chat() {
   const [message, setMessage] = useState("");
-  const [room, setRoom] = useState("");
-  const [messageReceived, setMessageReceived] = useState("");
-  const [currentRoom, setCurrentRoom] = useState("");
+  const { messageReceived, sendDirectMessage } = useChat();
+  const activeChat = useChatStore((state) => state.activeChat);
 
-  const sendMessage = () => {
-    socket.emit("send_message", {
-      message,
-      room,
-    });
-    setCurrentRoom(room);
+  const handleMessageClick = () => {
+    sendDirectMessage(activeChat?.id || "", message);
     setMessage("");
   };
 
-  const getAvailableRooms = () => {
-    socket.emit("get_available_rooms");
-  };
-
-  const joinRoom = () => {
-    if (room !== "") {
-      socket.emit("join_room", room);
-      setCurrentRoom(room);
-    }
-  };
-  useEffect(() => {
-    socket.on("receive_message", (data) => {
-      setMessageReceived(data.message);
-    });
-
-    getAvailableRooms();
-
-    return () => {
-      socket.off("receive_message");
-      socket.off("available_rooms");
-    };
-  }, [currentRoom]);
-
   return (
-    <div className="max-w-md mx-auto p-8 bg-white rounded-md shadow-md">
-      <h1 className="text-1 xl mb-2 font-bold tex">
-        Current Room: {currentRoom || "Not joined any room"}
-      </h1>
-      {/* <h1 className="text-1 xl mb-2 font-bold tex">
-        Available Rooms: {availableRooms.join(", ") || "No available rooms"}
-      </h1> */}
-      <h1 className="text-1 xl mb-2 font-bold tex">Message Received:</h1>
-      <div className="flex flex-col h-28 mb-2 border p-3 rounded-md border-blue-200">
-        {messageReceived}
-      </div>
+    <div className="flex justify-between flex-col w-full mx-auto bg-slate-100 rounded-md shadow-md col-start-2 col-end-3 row-start-2 row-end-3">
+      <div className="flex flex-col h-full">{messageReceived}</div>
 
-      <div className="flex flex-col gap-2">
-        <div className="flex gap-1">
+      <div className="flex p-6 flex-col gap-2 bg-white">
+        <div className="flex gap-6">
           <input
-            className="w-2/3 px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 "
-            placeholder="Enter room name"
-            onChange={(e) => setRoom(e.target.value)}
+            className="w-full px-3 py-2 border rounded-xl focus:outline-none focus:border-blue-500"
+            placeholder="Message..."
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
           />
           <button
-            className="w-1/3 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
-            onClick={joinRoom}
+            className="flex items-center justify-center w-12 h-12 bg-blue-500 text-white rounded-xl hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
+            onClick={handleMessageClick}
           >
-            Join room
+            <SendIcon />
           </button>
         </div>
-        <textarea
-          className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-          placeholder="Message..."
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-        <button
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
-          onClick={sendMessage}
-        >
-          Send Message
-        </button>
       </div>
     </div>
   );

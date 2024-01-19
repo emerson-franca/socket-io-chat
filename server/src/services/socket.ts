@@ -27,7 +27,6 @@ export const configureSockets = (io: SocketIOServer) => {
       socket,
     };
 
-    //emit the object values minus the socket object
     io.emit(
       "updateOnlineUsers",
       Object.values(onlineUsers).map(({ socket, ...rest }) => rest)
