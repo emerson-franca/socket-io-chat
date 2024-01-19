@@ -14,8 +14,8 @@ export function Chat() {
   };
 
   return (
-    <div className="flex justify-between flex-col w-full mx-auto bg-slate-100 rounded-md shadow-md col-start-2 col-end-3 row-start-2 row-end-3">
-      <div className="flex flex-col h-full">{messageReceived}</div>
+    <div className="flex justify-between flex-col w-full mx-auto bg-[#F8FAFF] rounded-md shadow-md col-start-2 col-end-3 row-start-2 row-end-3">
+      <div className="flex flex-col h-full p-4">{messageReceived}</div>
 
       <div className="flex p-6 flex-col gap-2 bg-white">
         <div className="flex gap-6">
