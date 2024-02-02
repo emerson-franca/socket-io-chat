@@ -1,7 +1,6 @@
 import express, { Application } from "express";
 import http from "http";
 import { Server as SocketIOServer } from "socket.io";
-import cors from "cors";
 import { initializeControllers } from "./controllers/socket.controller";
 
 const app: Application = express();
@@ -13,12 +12,10 @@ const buildPath = path.join(_dirname, "../client/build");
 
 const io: SocketIOServer = new SocketIOServer(server, {
   cors: {
-    origin: "http://44.211.42.212:3001/",
-    methods: ["GET", "POST"],
+    origin: "*",
   },
 });
 
-app.use(cors());
 app.use(express.static(buildPath));
 
 app.get("/*", function (req, res) {
