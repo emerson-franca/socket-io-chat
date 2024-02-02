@@ -13,7 +13,7 @@ const buildPath = path.join(_dirname, "../client/build");
 
 const io: SocketIOServer = new SocketIOServer(server, {
   cors: {
-    origin: "*",
+    origin: "http://44.211.42.212:3001/",
     methods: ["GET", "POST"],
   },
 });
